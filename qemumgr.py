@@ -109,7 +109,9 @@ class Manager:
                               "-chardev spicevmc,name=usbredir,id=usbredirchardev1 " \
                               "-device usb-redir,chardev=usbredirchardev1,id=usbredirdev1,bus=usb-controller-0.0 " \
                               "-chardev spicevmc,name=usbredir,id=usbredirchardev2 " \
-                              "-device usb-redir,chardev=usbredirchardev2,id=usbredirdev2,bus=usb-controller-0.0 "
+                              "-device usb-redir,chardev=usbredirchardev2,id=usbredirdev2,bus=usb-controller-0.0 " \
+                              "-accel tcg,thread=multi,tb-size=1024 " \
+                              "-device e1000,mac=EA:04:6D:F8:B2:BD,netdev=net0 -netdev user,id=net0 "
 
             cdrom_config = f"-device ide-cd,bus=ide.0,drive=cdrom0,bootindex=0 " \
                            f"-drive if=none,media=cdrom,id=cdrom0,file={self.cdrom_path.get()} "
@@ -123,7 +125,7 @@ class Manager:
                              f"{qemu_usb_config}" \
                              f"{'' if self.qemu_finish_inst.get() else cdrom_config} " \
                              f"{'-sdl' if self.qemu_sdl_window.get() else ''} " \
-                             f"{'-accel hax ' if self.qemu_use_haxm.get() else '-accel tcg,tb-size=1024 '}" \
+                             f"{'-accel hax ' if self.qemu_use_haxm.get() else ' '}" \
                              f"-nodefaults -vga none " \
                              f"-device virtio-vga " \
                              f"-machine q35,vmport=off,i8042=off " \
